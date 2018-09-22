@@ -33,7 +33,7 @@ $ ls -la /opt/libevent
 ### Langkah Menjalankan Server
 1) Kompilasi Server
 ```
-$ g++ -o server server.cpp
+$ g++ -o server server.cpp -levent
 ```
 2) Menjalankan Server
 ```
