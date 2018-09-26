@@ -72,7 +72,7 @@ Dari apache benchmarking tool, error yang tampil adalah sebagai berikut ketika m
 
 Dari siege, error yang tampil adalah sebagai berikut:
 a) akses tes1.html 10000 concurrent request (~500 bytes)
-![10000_siege_tes1](Screenshot/10000_siege_tes1.png)
+![10000_siege_tes1](Screenshot/10000_siege_tes1.JPG)
 b) akses tes2.html 10000 concurrent request (~1 kB)
 ![10000_siege_tes2](Screenshot/10000_siege_tes2.png)
 
@@ -127,7 +127,7 @@ Percentage of the requests served within a certain time (ms)
 100% 57 (longest request)
 ```
 #### Siege
-![1000_siege_tes1](Screenshot/1000_siege_tes1.jpg)
+![1000_siege_tes1](Screenshot/1000_siege_tes1.JPG)
 
 b) akses tes2.html 10000 concurrent request (~1 kB)
 ```
@@ -177,4 +177,4 @@ Percentage of the requests served within a certain time (ms)
 100% 87 (longest request)
 ```
 #### Siege
-![1000_siege_tes2](Screenshot/1000_siege_tes2.jpg)
+![1000_siege_tes2](Screenshot/1000_siege_tes2.JPG)
