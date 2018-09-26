@@ -71,9 +71,9 @@ Dari apache benchmarking tool, error yang tampil adalah sebagai berikut ketika m
 ![10000_request](Screenshot/10000_request.png)
 
 Dari siege, error yang tampil adalah sebagai berikut:
-<br>a) akses tes1.html 10000 concurrent request (~500 bytes)
+a) akses tes1.html 10000 concurrent request (~500 bytes)<br>
 ![10000_siege_tes1](Screenshot/10000_siege_tes1.JPG)
-<br>b) akses tes2.html 10000 concurrent request (~1 kB)
+<br>b) akses tes2.html 10000 concurrent request (~1 kB)<br>
 ![10000_siege_tes2](Screenshot/10000_siege_tes2.png)
 
 Namun, akses kedua file html tersebut dengan 1000 concurrent request mungkin dilakukan.
