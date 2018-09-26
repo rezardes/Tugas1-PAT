@@ -78,7 +78,7 @@ b) akses tes2.html 10000 concurrent request (~1 kB)
 
 Namun, akses kedua file html tersebut dengan 1000 concurrent request mungkin dilakukan.
 
-a) akses tes1.html 1000 concurrent request (~500 bytes)
+<a>a) akses tes1.html 1000 concurrent request (~500 bytes)
 #### Apache Benchmarking Tool
 ```
 This is ApacheBench, Version 2.3 <$Revision: 1826891 $>
@@ -129,7 +129,8 @@ Percentage of the requests served within a certain time (ms)
 #### Siege
 ![1000_siege_tes1](Screenshot/1000_siege_tes1.JPG)
 
-b) akses tes2.html 10000 concurrent request (~1 kB)
+<br>b) akses tes2.html 10000 concurrent request (~1 kB)
+#### Apache Benchmarking Tool
 ```
 This is ApacheBench, Version 2.3 <$Revision: 1826891 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
