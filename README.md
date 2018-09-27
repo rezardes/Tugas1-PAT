@@ -8,25 +8,153 @@ Tools pengukuran kinerja yang digunakan adalah Apache Benchmarking Tool dan Sieg
 Terdapat server menggunakan apache atau nginx. Tugas berupa pengukuran kinerja akses file html pada server tersebut.
 Kinerja yang diukur adalah berapa waktu respon rerata dan memori yang digunakan pada saat terjadi 1000 concurrent request untuk akses masing-masing 2 file html berbeda. 2 file HTML berbeda tersebut berukuran ~500 bytes dan ~20kB. File berukuran paling kecil bernama tes1.html sedangkan tes2.html berukuran yang paling besar.
 
-### Instalasi NGINX
-
-1) Update informasi repositori Debian:
-```
-$ sudo apt-get update
-```
-2) Instalasi package NGINX Open Source:
-```
-$ sudo apt-get install nginx
-```
-3) Verifikasi instalasi:
-```
-$ sudo nginx -v
-nginx version: nginx/1.6.2
-```
+Kami melalukan pengujian dengan server apache.
 
 ### Hasil Pengukuran Kinerja
-Untuk 10000 concurrent request, server apache tidak dapat menanmpung request tersebut.
-![10000_request](Screenshot/10000_request.png)
+Untuk ***10000 concurrent request***, server apache tidak dapat menampung request tersebut.
+#### Apache Benchmarking Tool
+Server socket tidak dapat menangani open file yang banyak
+```
+This is ApacheBench, Version 2.3 <$Revision: 1826891 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+socket: Too many open files (24)
+```
+#### Siege
+Pengujian melalui siege tidak dapat dilakukan karena resource tidak cukup tersedia
+```
+[error] Inadequate resources to create pool crew.c:87: Resource temporarily unavailable
+[fatal] unable to allocate memory for 10000 simulated browser: Resource temporarily unavailable
+```
+Namun, untuk ***1000 concurrent request***, server apache dapat mengelola request tersebut.
+<br>a) file html ~500 bytes (tes1.html)
+#### Apache Benchmarking Tool
+```
+This is ApacheBench, Version 2.3 <$Revision: 1826891 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+
+
+Server Software:        Apache/2.4.33
+Server Hostname:        localhost
+Server Port:            80
+
+Document Path:          /tes1.html
+Document Length:        537 bytes
+
+Concurrency Level:      1000
+Time taken for tests:   10.726 seconds
+Complete requests:      49328
+Failed requests:        86
+   (Connect: 0, Receive: 0, Length: 86, Exceptions: 0)
+Keep-Alive requests:    48781
+Total transferred:      43115912 bytes
+HTML transferred:       26442954 bytes
+Requests per second:    4599.12 [#/sec] (mean)
+Time per request:       217.433 [ms] (mean)
+Time per request:       0.217 [ms] (mean, across all concurrent requests)
+Transfer rate:          3925.72 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1  35.9      0    1037
+Processing:     0   32 387.0      2    8783
+Waiting:        0   26 335.3      2    8783
+Total:          0   34 408.4      2    9795
+
+Percentage of the requests served within a certain time (ms)
+  50%      2
+  66%      2
+  75%      2
+  80%      2
+  90%      3
+  95%      4
+  98%     17
+  99%    426
+ 100%   9795 (longest request)
+```
+#### SIEGE
+```
+Transactions:		       10000 hits
+Availability:		      100.00 %
+Elapsed time:		       11.64 secs
+Data transferred:	        5.12 MB
+Response time:		        0.12 secs
+Transaction rate:	      859.11 trans/sec
+Throughput:		        0.44 MB/sec
+Concurrency:		       99.95
+Successful transactions:       10000
+Failed transactions:	           0
+Longest transaction:	        2.02
+Shortest transaction:	        0.00
+```
+<br>b) file html ~20 kB (tes2.html)
+#### Apache Benchmarking Tool
+```
+This is ApacheBench, Version 2.3 <$Revision: 1826891 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+
+
+Server Software:        Apache/2.4.33
+Server Hostname:        localhost
+Server Port:            80
+
+Document Path:          /tes2.html
+Document Length:        20072 bytes
+
+Concurrency Level:      1000
+Time taken for tests:   10.158 seconds
+Complete requests:      49259
+Failed requests:        41
+   (Connect: 0, Receive: 0, Length: 41, Exceptions: 0)
+Keep-Alive requests:    48739
+Total transferred:      1004715384 bytes
+HTML transferred:       987903696 bytes
+Requests per second:    4849.19 [#/sec] (mean)
+Time per request:       206.220 [ms] (mean)
+Time per request:       0.206 [ms] (mean, across all concurrent requests)
+Transfer rate:          96588.78 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1  38.1      0    1020
+Processing:     0   32 431.0      0    9132
+Waiting:        0   30 414.0      0    9132
+Total:          0   34 457.0      0   10153
+
+Percentage of the requests served within a certain time (ms)
+  50%      0
+  66%      0
+  75%      0
+  80%      0
+  90%      1
+  95%      1
+  98%      2
+  99%    361
+ 100%  10153 (longest request)
+```
+#### Siege
+```
+Transactions:		       10000 hits
+Availability:		      100.00 %
+Elapsed time:		       10.22 secs
+Data transferred:	      191.42 MB
+Response time:		        0.05 secs
+Transaction rate:	      978.47 trans/sec
+Throughput:		       18.73 MB/sec
+Concurrency:		       48.65
+Successful transactions:       10000
+Failed transactions:	           0
+Longest transaction:	        1.27
+Shortest transaction:	        0.00
+```
 
 ## Persoalan Kedua
 Terdapat server yang harus dibuat dengan pemrograman C++. Server dibuat dengan library low-level. Kami menggunakan library libevent untuk menyelesaikan persoalan tersebut. Server yang dibuat harus diukur kinerjanya sama seperti persoalan pertama.
